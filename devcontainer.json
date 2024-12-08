@@ -1,0 +1,14 @@
+{
+  "name": "Advent of Code - Lua",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/lua:1": {
+      "version": "5.4"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["sumneko.lua"]
+    }
+  }
+}
