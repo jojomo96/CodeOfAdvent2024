@@ -1,14 +1,14 @@
 {
   "name": "Advent of Code - Lua",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
   "features": {
-    "ghcr.io/devcontainers/features/lua:1": {
-      "version": "5.4"
-    }
+    "ghcr.io/devcontainers/features/lua:1": {}
   },
   "customizations": {
     "vscode": {
-      "extensions": ["sumneko.lua"]
+      "extensions": [
+        "sumneko.lua" // Lua language server
+      ]
     }
   },
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y lua5.4"
