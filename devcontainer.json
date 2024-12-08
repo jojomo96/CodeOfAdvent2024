@@ -10,5 +10,6 @@
     "vscode": {
       "extensions": ["sumneko.lua"]
     }
-  }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y lua5.4"
 }
