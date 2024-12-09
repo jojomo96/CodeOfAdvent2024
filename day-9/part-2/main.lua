@@ -46,61 +46,61 @@ for i = 1, #data do
 end
 print("")
 
-local current_value = -1
-local data_block = {}
-for i = #data, 1, -1 do
-	local value = data[i]
-
-		if value ~= current_value then
-
-			if #data_block > 0 then
-				-- print("found data block at index " .. i)
-				-- print("data at index " .. i .. ": " .. value)
-				-- print("data block: " .. table.concat(data_block, ", "))
-
-				local space_count = 0
-				local space_index = -1
-				for j = 1, #data do
 
 
-					local value2 = data[j]
-					if value2 == "." then
-						if space_index == -1 then
-							space_index = j
-						end
-						space_count = space_count + 1
-						if space_count == #data_block then
 
-							for k = 1, #data_block do
-								data[space_index + k - 1] = data_block[k]
-							end
+local function getSameNumberBlocks(data)
+	local blocks = {}
+	local currentBlock = {}
+	local currentIndex = nil
 
-							for a = i, i + #data_block -1  do
-								data[a + 1] = "."
-							end
-							break
-						end
-					else
-						space_count = 0
-						space_index = -1
-					end
-
-					if i <= j then
-						space_count = 0
-						space_index = -1
-						data_block = {}
-						current_value = -1
-						break
-					end
-				end
+	for i = #data, 1, -1 do
+		if data[i] ~= "." then
+			if #currentBlock == 0 or data[i] == currentBlock[1] then
+				table.insert(currentBlock, 1, data[i])
+				currentIndex = i
+			else
+				table.insert(blocks, { block = currentBlock, index = currentIndex })
+				currentBlock = { data[i] }
+				currentIndex = i
 			end
-
-			data_block = {value}
-			current_value = value
-		else
-			table.insert(data_block, value)
 		end
+	end
 
+	if #currentBlock > 0 then
+		table.insert(blocks, { block = currentBlock, index = currentIndex })
+	end
+
+	return blocks
+end
+
+local function find_empty_space_with_size(data, size)
+    for i = 1, #data - size + 1 do
+        local isEmptySpace = true
+        for j = 0, size - 1 do
+            if data[i + j] ~= "." then
+                isEmptySpace = false
+                break
+            end
+        end
+        if isEmptySpace then
+            return i
+        end
+    end
+    return nil -- Return nil if no empty space of the specified size is found
+end
+
+local blocks = getSameNumberBlocks(data)
+for _, block_info in pairs(blocks) do
+	local index_empty_space = find_empty_space_with_size(data, #block_info.block)
+	if index_empty_space ~= nil and index_empty_space < block_info.index then
+		for i = 1, #block_info.block do
+			data[index_empty_space + i - 1] = block_info.block[i]
+		end
+		for i = 1, #block_info.block do
+			data[block_info.index + i - 1] = "."
+		end
+	end
 end
 
 for i = 1, #data do
@@ -108,8 +108,6 @@ for i = 1, #data do
 	io.write(value)
 end
 print("")
-
-print("00992111777.44.333....5555.6666.....8888..")
 
 local sum = 0
 
