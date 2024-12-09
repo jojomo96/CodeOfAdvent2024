@@ -40,10 +40,12 @@ end
 local function brute_force_solution(result, numbers)
 	-- Create a table of all possible combinations of operations
 	local combinations = {}
-	for i = 0, 2 ^ (#numbers - 1) - 1 do
+	-- Using 3^(n-1) for three operators
+	for i = 0, 3 ^ (#numbers - 1) - 1 do
 		local combination = {}
 		for j = 1, #numbers - 1 do
-			combination[j] = (i % 2 ^ j) // 2 ^ (j - 1)
+			-- Use division by 3 to get ternary digits (0, 1, 2)
+			combination[j] = (i // (3 ^ (j - 1))) % 3
 		end
 		combinations[i + 1] = combination
 	end
@@ -54,9 +56,11 @@ local function brute_force_solution(result, numbers)
 		local current = numbers[1]
 		for i = 1, #combination do
 			if combination[i] == 0 then
-				current = current + numbers[i + 1]
+				current = current + numbers[i + 1] -- Addition
+			elseif combination[i] == 1 then
+				current = current * numbers[i + 1] -- Multiplication
 			else
-				current = current * numbers[i + 1]
+				current = tonumber(tostring(current) .. tostring(numbers[i + 1]))
 			end
 		end
 
