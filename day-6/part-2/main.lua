@@ -16,14 +16,14 @@ local function read_file(filename)
 end
 
 local function clear_x(matrix)
-    for i = 1, n do
-        for j = 1, m do
-            if matrix[i][j] == "X" then
-                matrix[i][j] = "."
-            end
-        end
-    end
-    return matrix
+	for i = 1, n do
+		for j = 1, m do
+			if matrix[i][j] == "X" then
+				matrix[i][j] = "."
+			end
+		end
+	end
+	return matrix
 end
 
 local function validate_lines(lines)
@@ -130,32 +130,32 @@ local function move(matrix, row, col)
 end
 
 local function get_direction_name(vector)
-    for name, vec in pairs(directions) do
-        if vec[1] == vector[1] and vec[2] == vector[2] then
-            return name
-        end
-    end
-    return nil -- Return nil if the vector does not match any direction
+	for name, vec in pairs(directions) do
+		if vec[1] == vector[1] and vec[2] == vector[2] then
+			return name
+		end
+	end
+	return nil -- Return nil if the vector does not match any direction
 end
 
 local function initialize_passed_directions(n, m)
-    if type(n) ~= "number" or type(m) ~= "number" then
-        error("Dimensions must be numbers")
-    end
+	if type(n) ~= "number" or type(m) ~= "number" then
+		error("Dimensions must be numbers")
+	end
 
-    local passed = {}
-    for row = 1, n do
-        passed[row] = {}
-        for col = 1, m do
-            passed[row][col] = {
-                up = false,
-                down = false,
-                left = false,
-                right = false
-            }
-        end
-    end
-    return passed
+	local passed = {}
+	for row = 1, n do
+		passed[row] = {}
+		for col = 1, m do
+			passed[row][col] = {
+				up = false,
+				down = false,
+				left = false,
+				right = false
+			}
+		end
+	end
+	return passed
 end
 
 
@@ -163,111 +163,114 @@ local filename = "input.txt"
 local lines = read_file(filename)
 validate_lines(lines) -- sets global n, m
 local matrix = lines_to_matrix(lines)
-print_matrix(matrix)
+-- print_matrix(matrix)
 
 -- Initialize passed directions table
 local passed = initialize_passed_directions(n, m)
 
 -- Helper function to mark direction as passed
 local function mark_direction(row, col, vector)
-    -- Ensure the row exists
-    if not passed[row] then
-        passed[row] = {}
-    end
+	-- Ensure the row exists
+	if not passed[row] then
+		passed[row] = {}
+	end
 
-    -- Ensure the cell exists
-    if not passed[row][col] then
-        passed[row][col] = {
-            up = false,
-            down = false,
-            left = false,
-            right = false
-        }
-    end
+	-- Ensure the cell exists
+	if not passed[row][col] then
+		passed[row][col] = {
+			up = false,
+			down = false,
+			left = false,
+			right = false
+		}
+	end
 
-    -- Get the direction name from the vector
-    local direction = get_direction_name(vector)
-    if direction and passed[row][col][direction] ~= nil then
-        passed[row][col][direction] = true
-    else
-        error("Invalid vector: " .. tostring(vector[1]) .. ", " .. tostring(vector[2]))
-    end
+	-- Get the direction name from the vector
+	local direction = get_direction_name(vector)
+	if direction and passed[row][col][direction] ~= nil then
+		passed[row][col][direction] = true
+	else
+		error("Invalid vector: " .. tostring(vector[1]) .. ", " .. tostring(vector[2]))
+	end
 end
 
 local function print_passed()
-    for row, cols in pairs(passed) do
-        for col, directions in pairs(cols) do
-            print(string.format("Cell (%d, %d):", row, col))
-            for direction, status in pairs(directions) do
-                print(string.format("  %s: %s", direction, status and "true" or "false"))
-            end
-        end
-    end
+	for row, cols in pairs(passed) do
+		for col, directions in pairs(cols) do
+			print(string.format("Cell (%d, %d):", row, col))
+			for direction, status in pairs(directions) do
+				print(string.format("  %s: %s", direction, status and "true" or "false"))
+			end
+		end
+	end
 end
 
 local function already_passed(row, col, vector)
-    -- Get the direction name
-    local direction = get_direction_name(vector)
-    if passed[row] and passed[row][col] and direction then
-        return passed[row][col][direction] == true
-    end
-    return false
+	-- Get the direction name
+	local direction = get_direction_name(vector)
+	if passed[row] and passed[row][col] and direction then
+		return passed[row][col][direction] == true
+	end
+	return false
 end
 
 local function deep_copy(original)
-    if type(original) ~= 'table' then return original end
-    local copy = {}
-    for k, v in pairs(original) do
-        copy[k] = type(v) == 'table' and deep_copy(v) or v
-    end
-    return copy
+	if type(original) ~= 'table' then return original end
+	local copy = {}
+	for k, v in pairs(original) do
+		copy[k] = type(v) == 'table' and deep_copy(v) or v
+	end
+	return copy
 end
 
 
 local current_position = find_char_in_matrix(matrix, "^")
 local current_position_temp = deep_copy(current_position)
 local steps = 0
-
+local is_first_run = true
 
 for i = 1, n do
 	for j = 1, m do
 		if matrix[i][j] ~= "#" then
-			matrix[i][j] = "#"
+			if  is_first_run or (not is_first_run and matrix[i][j] == "X") then
+				matrix[i][j] = "#"
 
-			while not is_out_of_bounds do
-				if not already_passed(current_position.row, current_position.col, current_direction) then
-					mark_direction(current_position.row, current_position.col, current_direction)
-					-- matrix[current_position.row][current_position.col] = "X"
-				else
-					steps = steps + 1
-					print("Steps:", steps)
-					break
+				while not is_out_of_bounds do
+					if not already_passed(current_position.row, current_position.col, current_direction) then
+						mark_direction(current_position.row, current_position.col, current_direction)
+						if is_first_run then
+							matrix[current_position.row][current_position.col] = "X"
+						end
+					else
+						steps = steps + 1
+						-- print("Steps:", steps)
+						break
+					end
+					current_position.row, current_position.col = move(matrix, current_position.row, current_position.col)
+
 				end
-
-
-				current_position.row, current_position.col = move(matrix, current_position.row, current_position.col)
-				if is_out_of_bounds then
-					break
+				if is_first_run then
+					is_first_run = false
 				end
+				-- print_matrix(matrix)
+				-- clear_x(matrix)
+				passed = initialize_passed_directions(n, m)
+				current_position = deep_copy(current_position_temp)
+				current_direction = directions.up
+				is_out_of_bounds = false
+
+				-- print("Current Player position:", current_position.row, current_position.col)
+				matrix[i][j] = "."
+				-- print("Current position:", i, j)
 			end
-			-- print_matrix(matrix)
-			-- clear_x(matrix)
-			passed = initialize_passed_directions(n, m)
-			current_position = deep_copy(current_position_temp)
-			current_direction = directions.up
-			is_out_of_bounds = false
-
-			-- print("Current Player position:", current_position.row, current_position.col)
-			matrix[i][j] = "."
-			-- print("Current position:", i, j)
 		end
 	end
-	print("Row:", i)
+	-- print("Row:", i)
 end
 
 
 mark_direction(current_position.row, current_position.col, directions.up)
 
 
-print_matrix(matrix)
+-- print_matrix(matrix)
 print("Steps:", steps)
