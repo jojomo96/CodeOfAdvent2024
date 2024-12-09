@@ -50,23 +50,18 @@ local current_value = -1
 local data_block = {}
 for i = #data, 1, -1 do
 	local value = data[i]
-	if value ~= "." then
 
 		if value ~= current_value then
 
-
-
 			if #data_block > 0 then
-				print("found data block at index " .. i)
-				print("data block: " .. table.concat(data_block, ", "))
+				-- print("found data block at index " .. i)
+				-- print("data at index " .. i .. ": " .. value)
+				-- print("data block: " .. table.concat(data_block, ", "))
 
 				local space_count = 0
 				local space_index = -1
 				for j = 1, #data do
 
-					if i == j then
-						break
-					end
 
 					local value2 = data[j]
 					if value2 == "." then
@@ -75,20 +70,27 @@ for i = #data, 1, -1 do
 						end
 						space_count = space_count + 1
 						if space_count == #data_block then
+
 							for k = 1, #data_block do
 								data[space_index + k - 1] = data_block[k]
 							end
 
 							for a = i, i + #data_block -1  do
-								print("removing " .. data[a + 1])
+								data[a + 1] = "."
 							end
-
-
 							break
 						end
 					else
 						space_count = 0
 						space_index = -1
+					end
+
+					if i <= j then
+						space_count = 0
+						space_index = -1
+						data_block = {}
+						current_value = -1
+						break
 					end
 				end
 			end
@@ -98,7 +100,7 @@ for i = #data, 1, -1 do
 		else
 			table.insert(data_block, value)
 		end
-	end
+
 end
 
 for i = 1, #data do
@@ -106,6 +108,8 @@ for i = 1, #data do
 	io.write(value)
 end
 print("")
+
+print("00992111777.44.333....5555.6666.....8888..")
 
 local sum = 0
 
