@@ -1,4 +1,4 @@
-local function transform_stones_optimized(stones)
+local function transform_stones(stones)
     local newStones = {}
     
     for number, count in pairs(stones) do
@@ -52,7 +52,7 @@ local function simulate(filename, blinks)
     local stones = load_stones(filename)
 
     for i = 1, blinks do
-        stones = transform_stones_optimized(stones)
+        stones = transform_stones(stones)
         -- print("Number of stones after " .. i .. " blinks: " .. table.concat(keys(stones), ", "))
     end
 
