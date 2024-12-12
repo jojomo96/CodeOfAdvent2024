@@ -46,9 +46,6 @@ for i = 1, #data do
 end
 print("")
 
-
-
-
 local function getSameNumberBlocks(data)
 	local blocks = {}
 	local currentBlock = {}
