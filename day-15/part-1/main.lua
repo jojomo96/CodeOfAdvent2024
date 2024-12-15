@@ -1,119 +1,97 @@
-local function parseInput(filename)
-    local robots = {}
-    for line in io.lines(filename) do
-        local x, y = line:match("p=(%d+),(%d+)")
-        x, y = tonumber(x), tonumber(y)
+local directions = {
+    ["^"] = {x = -1, y = 0},
+    ["v"] = {x = 1, y = 0},
+    ["<"] = {x = 0, y = -1},
+    [">"] = {x = 0, y = 1}
+}
 
-        local vx, vy = line:match("v=(-?%d+),(-?%d+)")
-        vx, vy = tonumber(vx), tonumber(vy)
-
-        table.insert(robots, { x = x + 1, y = y + 1, vx = vx, vy = vy })
-    end
-    return robots
-end
-
-local function printRobots(robots)
-    for _, robot in ipairs(robots) do
-        print("p=" .. robot.x .. "," .. robot.y .. " v=" .. robot.vx .. "," .. robot.vy)
+local function findRobot(map, mapWidth, mapHeight)
+    for y = 1, mapHeight do
+        for x = 1, mapWidth do
+            if map[x][y] == "@" then
+                return x, y
+            end
+        end
     end
 end
 
-local function createMap(robots, map_x, map_y)
+local function parseInput()
     local map = {}
-    for i = 1, map_y do
-        map[i] = {}
-        for j = 1, map_x do
-            map[i][j] = 0
+    local mapWidth = 0
+    local mapHeight = 0
+    local moveInstructions = ""
+
+    local isMap = true
+    for line in io.lines("input.txt") do
+        if line:match("^#") then
+            if isMap then
+                mapHeight = mapHeight + 1
+                mapWidth = #line
+                local row = {}
+                for i = 1, #line do
+                    table.insert(row, line:sub(i, i))
+                end
+                table.insert(map, row)
+            end
+        else
+            isMap = false
+            moveInstructions = moveInstructions .. line
         end
     end
 
-    for _, robot in ipairs(robots) do
-        map[robot.y][robot.x] = map[robot.y][robot.x] + 1
-    end
-
-    return map
+    return map, mapWidth, mapHeight, moveInstructions
 end
 
-local function printMap(map, map_x, map_y)
-    for i = 1, map_y do
-        for j = 1, map_x do
-            if map[i][j] == 0 then
-                io.write(".")
-            else
-                io.write(map[i][j])
-            end
+local function printMap(map)
+    for y = 1, #map do
+        for x = 1, #map[y] do
+            io.write(map[y][x])
         end
         io.write("\n")
     end
-    io.write("\n")
 end
 
-local function createAndPrintMap(robots, map_x, map_y)
-    local map = createMap(robots, map_x, map_y)
-    printMap(map, map_x, map_y)
+local function moveRobot(map, direction)
+    local dx = directions[direction].x
+    local dy = directions[direction].y
+
+    local current_x, current_y = findRobot(map, #map[1], #map)
+
+    local look_x, look_y = dx + current_x, dy + current_y
+    while map[look_x][look_y ] == "O" do
+        look_x = look_x + dx
+        look_y = look_y + dy
+    end
+    if map[look_x][look_y] == "#" then
+        return false
+    end
+    if map[look_x][look_y] == "." then
+        map[look_x][look_y] = "O"
+        map[current_x][current_y] = "."
+        map[current_x + dx][current_y + dy] = "@"
+    end
 end
 
-local function calculateSafeFactorQuadrant(map, start_x, start_y, end_x, end_y, mid_x, mid_y)
-    local safeFactor = 0
-    for i = start_y, end_y do
-        for j = start_x, end_x do
-            if not (i == mid_y and j == mid_x) and map[i][j] > 0 then
-                safeFactor = safeFactor + map[i][j]
+local function calcScore(map)
+    local score = 0
+    for y = 1, #map do
+        for x = 1, #map[y] do
+            if map[x][y] == "O" then
+                score = score + ((x-1) * 100) + (y-1)
             end
         end
     end
-    return safeFactor
-end
-
-local function calculateSafeFactor(map, map_x, map_y)
-    local safeFactor
-    local mid_x = math.ceil(map_x / 2)
-    local mid_y = math.ceil(map_y / 2)
-
-    safeFactor = calculateSafeFactorQuadrant(map, 1, 1, mid_x - 1, mid_y - 1, mid_x, mid_y)
-    safeFactor = safeFactor * calculateSafeFactorQuadrant(map, mid_x + 1, 1, map_x, mid_y - 1, mid_x, mid_y)
-    safeFactor = safeFactor * calculateSafeFactorQuadrant(map, 1, mid_y + 1, mid_x - 1, map_y, mid_x, mid_y)
-    safeFactor = safeFactor * calculateSafeFactorQuadrant(map, mid_x + 1, mid_y + 1, map_x, map_y, mid_x, mid_y)
-
-    return safeFactor
-end
-
-local function moveRobots(robots, map_x, map_y)
-    for _, robot in ipairs(robots) do
-        robot.x = robot.x + robot.vx
-        robot.y = robot.y + robot.vy
-
-        if robot.x < 1 then
-            robot.x = map_x + robot.x
-        elseif robot.x > map_x then
-            robot.x = robot.x - map_x
-        end
-
-        if robot.y < 1 then
-            robot.y = map_y + robot.y
-        elseif robot.y > map_y then
-            robot.y = robot.y - map_y
-        end
-    end
+    return score
 end
 
 local function main()
-    local map_x, map_y = 101,103
-    local robots = parseInput("input.txt")
-    printRobots(robots)
-    local map = createMap(robots, map_x, map_y)
-    printMap(map, map_x, map_y)
-
-
-    local seconds = 100
-    for i = 1, seconds do
-        moveRobots(robots, map_x, map_y)
+    local map, mapWidth, mapHeight, moveInstructions = parseInput()
+    for i = 1, #moveInstructions do
+        local move = moveInstructions:sub(i, i)
+        moveRobot(map, move)
     end
-    local map = createMap(robots, map_x, map_y)
-    printMap(map, map_x, map_y)
-    
-    local safeFactor = calculateSafeFactor(map, map_x, map_y)
-    print("Safe factor:", safeFactor)
+    printMap(map)
+    print(calcScore(map))
 end
 
 main()
