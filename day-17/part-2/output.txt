@@ -1,0 +1,141 @@
+Index: 15
+Output: 	0	Expected: 	0	Testa: 	0
+Index: 14
+Output: 	0	Expected: 	0	Testa: 	7
+Index: 14
+Output: 	3, 0	Expected: 	3	Testa: 	58
+Index: 13
+Output: 	5, 3, 0	Expected: 	5	Testa: 	470
+Index: 12
+Output: 	5, 5, 3, 0	Expected: 	5	Testa: 	3760
+Index: 11
+Output: 	5, 5, 3, 0	Expected: 	5	Testa: 	3766
+Index: 11
+Output: 	3, 0	Expected: 	3	Testa: 	60
+Index: 13
+Output: 	5, 3, 0	Expected: 	5	Testa: 	482
+Index: 12
+Output: 	5, 5, 3, 0	Expected: 	5	Testa: 	3857
+Index: 11
+Output: 	1, 5, 5, 3, 0	Expected: 	1	Testa: 	30856
+Index: 10
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	246852
+Index: 9
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	246853
+Index: 9
+Output: 	1, 5, 5, 3, 0	Expected: 	1	Testa: 	30862
+Index: 10
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	246899
+Index: 9
+Output: 	7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	1975192
+Index: 8
+Output: 	1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	15801536
+Index: 7
+Output: 	3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	3	Testa: 	126412291
+Index: 6
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1011298328
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8090386630
+Index: 4
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1011298335
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8090386682
+Index: 4
+Output: 	7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	64723093456
+Index: 3
+Output: 	7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	1975193
+Index: 8
+Output: 	1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	15801544
+Index: 7
+Output: 	1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	15801550
+Index: 7
+Output: 	7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	1975196
+Index: 8
+Output: 	1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	15801568
+Index: 7
+Output: 	3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	3	Testa: 	126412547
+Index: 6
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1011300376
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8090403014
+Index: 4
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1011300383
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8090403066
+Index: 4
+Output: 	7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	64723224528
+Index: 3
+Output: 	5, 5, 3, 0	Expected: 	5	Testa: 	3862
+Index: 11
+Output: 	1, 5, 5, 3, 0	Expected: 	1	Testa: 	30896
+Index: 10
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247172
+Index: 9
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247173
+Index: 9
+Output: 	5, 3, 0	Expected: 	5	Testa: 	483
+Index: 12
+Output: 	5, 5, 3, 0	Expected: 	5	Testa: 	3865
+Index: 11
+Output: 	1, 5, 5, 3, 0	Expected: 	1	Testa: 	30920
+Index: 10
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247360
+Index: 9
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247364
+Index: 9
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247365
+Index: 9
+Output: 	1, 5, 5, 3, 0	Expected: 	1	Testa: 	30926
+Index: 10
+Output: 	4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	247408
+Index: 9
+Output: 	7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	1979264
+Index: 8
+Output: 	1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	15834113
+Index: 7
+Output: 	3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	3	Testa: 	126672907
+Index: 6
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1013383256
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066048
+Index: 4
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066054
+Index: 4
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1013383257
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066056
+Index: 4
+Output: 	7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	64856528451
+Index: 3
+Output: 	7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	518852227612
+Index: 2
+Output: 	1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	4150817820896
+Index: 1
+Output: 	4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	33206542567172
+Index: 0
+Output: 	4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	33206542567173
+Index: 0
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066060
+Index: 4
+Output: 	0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	0	Testa: 	1013383258
+Index: 5
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066064
+Index: 4
+Output: 	5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	5	Testa: 	8107066070
+Index: 4
+Output: 	7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	64856528562
+Index: 3
+Output: 	7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	7	Testa: 	518852228497
+Index: 2
+Output: 	1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	4150817827976
+Index: 1
+Output: 	4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	33206542623812
+Index: 0
+Output: 	4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	33206542623813
+Index: 0
+Output: 	1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	1	Testa: 	4150817827982
+Index: 1
+Output: 	4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	4	Testa: 	33206542623859
+Index: 0
+Output: 	2, 4, 1, 7, 7, 5, 0, 3, 1, 7, 4, 1, 5, 5, 3, 0	Expected: 	2	Testa: 	265652340990875
+Final Result: 	265652340990875

@@ -30,7 +30,7 @@ local function parseContent(content)
             end
         end
     end
-    A = 0
+    A = 1
     return A, B, C, program
 end
 
@@ -137,13 +137,13 @@ local function executeProgram(A, B, C, program)
     return outputValues
 end
 
-local function isProgrammTheSame(program1, program2)
-    if #program1 ~= #program2 then
+local function isProgrammTheSame(program1, program2, i)
+    if #program1 < i or #program2 < i then
         return false
     end
 
-    for i = 1, #program1 do
-        if program1[i] ~= program2[i] then
+    for j = 1, i do
+        if program1[j] ~= program2[j] then
             return false
         end
     end
@@ -151,30 +151,55 @@ local function isProgrammTheSame(program1, program2)
     return true
 end
 
-local function findAssosoatedProgramm(A, B, C, targetProgram)
-    local counter = 0
-    while true do
-        if isProgrammTheSame(executeProgram(A, B, C, targetProgram), targetProgram) then
-            break
+-- Recursive function definition
+local function recursive(program, output, index, a)
+    if index < 0 then
+        return a
+    end
+
+    print("Index: " .. index)
+    local output_value = output[index + 1] -- Lua index starts from 1
+
+    for new = 0, 7 do
+        local testa = (a << 3) + new
+        local out = executeProgram(testa, 0, 0, program)
+
+        -- Check if output matches remaining program output
+        local match = true
+        for i = 1, #output - index do
+            if out[i] ~= output[index + i] then
+                match = false
+                break
+            end
         end
 
-        A = A + 1
-        counter = counter + 1
-        if counter % 10000 == 0 then
-            print(A)
+        if match then
+            print("Output: ", table.concat(out, ", "), "Expected: ", output_value, "Testa: ", testa)
+            local res = recursive(program, output, index - 1, testa)
+            if res ~= nil then
+                return res
+            end
         end
     end
-    return A
+
+    return nil
 end
 
 -- Main function
 local function main()
-    local filename = "input.txt"
+    -- Read input file and parse content
+    local filename = "input.txt" -- Replace with your file name
     local content = readFile(filename)
-    local A, B, C, targetProgram = parseContent(content)
+    local A, B, C, program = parseContent(content)
 
-    local result = findAssosoatedProgramm(A, B, C, targetProgram)
-    print(result)
+    -- Start recursion
+    local result = recursive(program, program, #program - 1, 0)
+    if result then
+        print("Final Result: ", result)
+    else
+        print("No result found.")
+    end
 end
 
+-- Run the main function
 main()
