@@ -306,7 +306,7 @@ local function main()
 	initializeMap()
 
 	-- Insert the first 1024 obstacles initially
-	local initial_obstacles = 2900
+	local initial_obstacles = 1024
 	for i = 1, initial_obstacles do
 		local obs = obstacles[i]
 		map[obs.row][obs.col] = "#"
@@ -332,29 +332,60 @@ local function main()
 		map[obs.row][obs.col] = "#"
 		last_added_obstacle = obs -- Track the last added obstacle
 
-		-- Attempt to find path again
-		path = bidirectionalAStar()
+		-- Check if the current path is blocked
+		local blocked = false
+		for _, pos in ipairs(path) do
+			local r, c = pos:match("(%d+),(%d+)")
+			r, c = tonumber(r), tonumber(c)
+			if map[r][c] == "#" then
+				blocked = true
+				break
+			end
+		end
 
-		if not path then
-			-- No path after inserting this obstacle
-			failed_obstacle = obs
-			failed_line_number = i
-			printGridWithPaths(nil, nil, true)
+		if blocked then
 
-			-- Print details
-			print("The obstacle inserted at line " ..
-			failed_line_number .. " (" .. obs.row .. "," .. obs.col .. ") blocked the last possible path.")
-			return
-		else
-			-- A path still exists, continue
-			-- Clear the final path marks ('o') so the next attempt starts clean
-			-- We only keep the obstacles. Also reset the map start/end markers.
 			initializeMap()
 			for j = 1, i do
 				local o = obstacles[j]
 				map[o.row][o.col] = "#"
 			end
+
+			-- Attempt to find path again
+			path = bidirectionalAStar()
+
+			if not path then
+				-- No path after inserting this obstacle
+				failed_obstacle = obs
+				failed_line_number = i
+				printGridWithPaths(nil, nil, true)
+
+				-- Print details
+				print("The obstacle inserted at line " ..
+					failed_line_number .. " (" .. obs.row .. "," .. obs.col .. ") blocked the last possible path.")
+				return
+			else
+				-- A path still exists, continue
+				-- Clear the final path marks ('o') so the next attempt starts clean
+				-- We only keep the obstacles. Also reset the map start/end markers.
+				initializeMap()
+				for j = 1, i do
+					local o = obstacles[j]
+					map[o.row][o.col] = "#"
+				end
+			end
 		end
+
+		for _, node in ipairs(path) do
+			local r, c = node:match("(%d+),(%d+)")
+			r, c = tonumber(r), tonumber(c)
+			if map[r][c] ~= "S" and map[r][c] ~= "E" then
+				map[r][c] = "o"
+			end
+		end
+		-- No need to check path, just update the map
+		printGridWithPaths(nil, nil, true)
+		os.execute("sleep 0.005")
 	end
 
 	-- If we reach here, no obstacle blocked the path completely
